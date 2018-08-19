@@ -1,5 +1,18 @@
 --1
 
+local version = 1
+
+local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
+local latestVersion = tonumber(latest.readLine())
+
+if latestVersion > version then
+    print("Out of date; upgrading.")
+    fs.delete(shell.getRunningProgram())
+    shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua chatLogger.lua")
+    print("Update complete!")
+    print("If you wish to run the new version, then hold CTRL+R and run chatLogger.lua.")
+end
+
 local chatbox = peripheral.find("chat_box")
 local monitor = peripheral.find("monitor", function(name, object) return object.isColor() end)
 if not monitor then print("This works best with Advanced monitors; consider upgrading.")
