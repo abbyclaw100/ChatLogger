@@ -1,7 +1,7 @@
---9
---made PotatoNET logging better
+--10
+--added a break statement to prevent minor annoyances with updating
 
-local version = 9
+local version = 10
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 
@@ -9,28 +9,29 @@ if latest ~= nil then
     local latestVersion = tonumber(string.sub(latest.readLine(), 3))
     if latestVersion > version then
         print("Out of date (version "..latestVersion.." is out).")
-		print("Update notes: "..string.sub(latest.readLine(), 3))
-		print("Do you wish to update? (y/n)")
-		local timeout = os.startTimer(15)
-		while true do
-	    	local event = {os.pullEvent()}
+	print("Update notes: "..string.sub(latest.readLine(), 3))
+	print("Do you wish to update? (y/n)")
+	local timeout = os.startTimer(15)
+	while true do
+		local event = {os.pullEvent()}
 	    	if event[1] == "char" then
-				if event[2] == "y" then
+			if event[2] == "y" then
         			fs.delete(shell.getRunningProgram())
         			shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua chatLogger.lua")
         			print("Update complete!")
         			print("If you wish to run the new version, then hold CTRL+R and run chatLogger.lua.")
-				else
+				break
+			else
 		    		print("Not updating.")
 		    		break
-				end
+			end
 	    	elseif event[1] == "timer" and event[2] == timeout then
-	   			print("Not updating.")
-				break
+	   		print("Not updating.")
+			break
 	    	end
-		end
+	end
     else 
-		print("Up to date! (or Github hasn't pushed my update)")
+	print("Up to date! (or Github hasn't pushed my update)")
     end
 else
     print("Failed to check for new version.")
