@@ -53,7 +53,7 @@ monitor.setCursorPos(1,1)
 monitor.setTextScale(0.5)
 
 if modem then
-    modem.open(2)
+    modem.open(3)
 end
 
 --print("chat booted!")
