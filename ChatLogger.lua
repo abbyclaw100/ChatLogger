@@ -1,6 +1,6 @@
---2
+--3
 
-local version = 2
+local version = 3
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 if latest ~= nil then
