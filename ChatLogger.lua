@@ -15,7 +15,7 @@ end
 
 local chatbox = peripheral.find("chat_box")
 local monitor = peripheral.find("monitor", function(name, object) return object.isColor() end)
-if not monitor then print("This works best with Advanced monitors; consider upgrading.")
+if not monitor then print("This works best with Advanced monitors; consider upgrading.") end
 
 local modem = peripheral.find("modem", function(name, object) return object.isWireless() end)
 
