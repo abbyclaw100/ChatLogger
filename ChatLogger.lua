@@ -1,7 +1,7 @@
---6
---made updates voluntary
+--7
+--made PotatoNET logging better
 
-local version = 6
+local version = 7
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 
@@ -94,13 +94,18 @@ while true do
         term.setTextColor(colors.magenta)
         write(vars[2])
         term.setTextColor(colors.white)
-        print(": \\"..vars[3].." "..textutils.serialize(vars[4]))
+        print(": \\"..vars[3].." "..table.concat(vars[4], " "))
     elseif vars[1] == "modem_message" then
-        if vars[3] == 2 and vars[4] == 2 then
+        if vars[3] == 2 and vars[4] == 2 and vars[5].username and type(vars[5].message) == "table" then
             term.setTextColor(colors.cyan)
             write(vars[5].username)
             term.setTextColor(colors.white)
             print(": "..textutils.serialize(vars[5].message))
+		elseif vars[3] == 2 and vars[4] == 2 and vars[5].username and type(vars[5].message) == "string" then
+			term.setTextColor(colors.cyan)
+            write(vars[5].username)
+            term.setTextColor(colors.white)
+            print(": "..vars[5].message)
         end
     end
 end
