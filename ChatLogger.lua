@@ -1,7 +1,7 @@
---11
---added timestamps
+--12
+--prints version number
 
-local version = 11
+local version = 12
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 
@@ -31,6 +31,7 @@ if latest ~= nil then
 		end
     else 
 		print("Up to date! (or Github hasn't pushed my update)")
+		print("Running version "..version)
     end
 else
     print("Failed to check for new version.")
