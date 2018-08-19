@@ -1,4 +1,4 @@
---1
+--2
 
 local version = 1
 
@@ -12,6 +12,7 @@ if latest ~= nil then
         shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua chatLogger.lua")
         print("Update complete!")
         print("If you wish to run the new version, then hold CTRL+R and run chatLogger.lua.")
+    else print("Up to date!")
     end
 else
     print("Failed to check for new version.")
