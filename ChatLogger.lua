@@ -4,7 +4,7 @@ local version = 1
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 if latest ~= nil then
-    local latestVersion = tonumber(latest.readLine())
+    local latestVersion = tonumber(string.sub(latest.readLine(), 3))
 
     if latestVersion > version then
         print("Out of date; upgrading.")
