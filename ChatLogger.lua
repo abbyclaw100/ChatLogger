@@ -1,7 +1,7 @@
---12
+--13
 --prints version number
 
-local version = 12
+local version = 13
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 
@@ -31,11 +31,12 @@ if latest ~= nil then
 		end
     else 
 		print("Up to date! (or Github hasn't pushed my update)")
-		print("Running version "..version)
     end
 else
     print("Failed to check for new version.")
 end
+
+print("Running version "..version)
 
 local chatbox = peripheral.find("chat_box")
 local monitor = peripheral.find("monitor", function(name, object) return object.isColor() end)
