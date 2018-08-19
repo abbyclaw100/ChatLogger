@@ -1,6 +1,6 @@
---4
+--5
 
-local version = 4
+local version = 5
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 if latest ~= nil then
@@ -23,6 +23,10 @@ local monitor = peripheral.find("monitor", function(name, object) return object.
 if not monitor then print("This works best with Advanced monitors; consider upgrading.") end
 
 local modem = peripheral.find("modem", function(name, object) return object.isWireless() end)
+
+if not monitor then
+	monitor = peripheral.find("monitor")   
+end
 
 term.redirect(monitor)
 
