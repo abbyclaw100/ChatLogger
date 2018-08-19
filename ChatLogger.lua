@@ -68,6 +68,11 @@ while true do
         write(vars[2])
         term.setTextColor(colors.yellow)
         print(" left the game")
+    elseif vars[1] == "command" then
+        term.setTextColor(colors.magenta)
+        write(vars[2])
+        term.setTextColor(colors.white)
+        print(": \"..vars[3].." "..textutils.serialize(vars[4]))
     elseif vars[1] == "modem_message" then
         if vars[3] == 2 and vars[4] == 2 then
             term.setTextColor(colors.cyan)
