@@ -1,6 +1,6 @@
---3
+--4
 
-local version = 3
+local version = 4
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 if latest ~= nil then
@@ -72,7 +72,7 @@ while true do
         term.setTextColor(colors.magenta)
         write(vars[2])
         term.setTextColor(colors.white)
-        print(": \"..vars[3].." "..textutils.serialize(vars[4]))
+        print(": \\"..vars[3].." "..textutils.serialize(vars[4]))
     elseif vars[1] == "modem_message" then
         if vars[3] == 2 and vars[4] == 2 then
             term.setTextColor(colors.cyan)
