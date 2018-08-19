@@ -1,7 +1,7 @@
---8
+--9
 --made PotatoNET logging better
 
-local version = 8
+local version = 9
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 
@@ -30,7 +30,7 @@ if latest ~= nil then
 	    	end
 		end
     else 
-		print("Up to date!")
+		print("Up to date! (or Github hasn't pushed my update)")
     end
 else
     print("Failed to check for new version.")
