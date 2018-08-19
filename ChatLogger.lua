@@ -1,7 +1,7 @@
---7
+--8
 --made PotatoNET logging better
 
-local version = 7
+local version = 8
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 
