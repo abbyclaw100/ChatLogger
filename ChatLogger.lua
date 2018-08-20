@@ -1,7 +1,7 @@
---13
---prints version number
+--14
+--potatoNET changed channels
 
-local version = 13
+local version = 14
 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
 
@@ -54,8 +54,10 @@ monitor.clear()
 monitor.setCursorPos(1,1)
 monitor.setTextScale(0.5)
 
+local channel = 3
+
 if modem then
-    modem.open(3)
+    modem.open(channel)
 end
 
 --print("chat booted!")
@@ -114,7 +116,7 @@ while true do
             write(vars[5].username)
             term.setTextColor(colors.white)
             print(": "..textutils.serialize(vars[5].message))
-		elseif vars[3] == 2 and vars[4] == 2 and vars[5].username and type(vars[5].message) == "string" then
+		elseif vars[3] == channel and vars[4] == channel and vars[5].username and type(vars[5].message) == "string" then
 			writeTime()
 			term.setTextColor(colors.cyan)
             write(vars[5].username)
