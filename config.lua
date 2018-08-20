@@ -1,0 +1,3 @@
+{
+  monitorName = false,
+}
