@@ -1,82 +1,93 @@
---14
---potatoNET changed channels
-
-local version = 14
-
+--15
+--added configuration options
+ 
+local version = 15
+ 
+if not fs.exists("config.lua") then
+    shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
+end
+ 
+local configFile = fs.open("config.lua", "r")
+local configSerialized = configFile.readAll()
+local config = textutils.unserialize(configSerialized)
+configFile.close()
+ 
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
-
+ 
 if latest ~= nil then
     local latestVersion = tonumber(string.sub(latest.readLine(), 3))
     if latestVersion > version then
         print("Out of date (version "..latestVersion.." is out).")
-		print("Update notes: "..string.sub(latest.readLine(), 3))
-		print("Do you wish to update? (y/n)")
-		local timeout = os.startTimer(15)
-		while true do
-	    	local event = {os.pullEvent()}
-	    	if event[1] == "char" then
-				if event[2] == "y" then
-        			fs.delete(shell.getRunningProgram())
-        			shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua chatLogger.lua")
-        			print("Update complete!")
-        			print("If you wish to run the new version, then hold CTRL+R and run chatLogger.lua.")
-				else
-		    		print("Not updating.")
-		    		break
-				end
-	    	elseif event[1] == "timer" and event[2] == timeout then
-	   			print("Not updating.")
-				break
-	    	end
-		end
-    else 
-		print("Up to date! (or Github hasn't pushed my update)")
+        print("Update notes: "..string.sub(latest.readLine(), 3))
+        print("Do you wish to update? (y/n)")
+        local timeout = os.startTimer(15)
+        while true do
+            local event = {os.pullEvent()}
+            if event[1] == "char" then
+                if event[2] == "y" then
+                    fs.delete(shell.getRunningProgram())
+                    shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua chatLogger.lua")
+                    print("Update complete!")
+                    print("If you wish to run the new version, then hold CTRL+R and run chatLogger.lua.")
+                else
+                    print("Not updating.")
+                    break
+                end
+            elseif event[1] == "timer" and event[2] == timeout then
+                print("Not updating.")
+                break
+            end
+        end
+    else
+        print("Up to date! (or Github hasn't pushed my update)")
     end
 else
     print("Failed to check for new version.")
 end
-
+ 
 print("Running version "..version)
-
+ 
 local chatbox = peripheral.find("chat_box")
-local monitor = peripheral.find("monitor", function(name, object) return object.isColor() end)
-if not monitor then print("This works best with Advanced monitors; consider upgrading.") end
-
-local modem = peripheral.find("modem", function(name, object) return object.isWireless() end)
-
-if not monitor then
-	monitor = peripheral.find("monitor")   
+ 
+local monitor
+if type(config.monitorName) ~= "string" then
+    print("Monitor not set in config.lua.")
+    monitor = peripheral.find("monitor", function(name, object) return object.isColor() end)
+    if not monitor then print("This works best with Advanced monitors; consider upgrading.") end
+else monitor = peripheral.wrap(config.monitorName)
 end
-
+ 
+local modem = peripheral.find("modem", function(name, object) return object.isWireless() end)
+if not monitor then monitor = peripheral.find("monitor") end
 term.redirect(monitor)
-
+ 
 monitor.clear()
 monitor.setCursorPos(1,1)
 monitor.setTextScale(0.5)
-
+ 
 local channel = 3
-
+ 
 if modem then
     modem.open(channel)
 end
-
+ 
 --print("chat booted!")
-
+ 
 local function writeTime()
-	term.setTextColor(colors.purple)
-	write(textutils.formatTime(os.time("utc"), true).." ")
+    term.setTextColor(colors.purple)
+    write(textutils.formatTime(os.time("utc"), true).." ")
 end
-
+ 
 while true do
     local vars = {os.pullEvent()}
     if vars[1] == "chat" then
-		writeTime()
+        writeTime()
         term.setTextColor(colors.green)
         write(vars[2])
         term.setTextColor(colors.white)
         print(": "..vars[3])
     elseif vars[1] == "death" then
-		writeTime()
+        writeTime()
         term.setTextColor(colors.white)
         if vars[3] == nil then
             print(vars[2].." died")
@@ -90,13 +101,13 @@ while true do
             end
         end
     elseif vars[1] == "join" then
-		writeTime()
+        writeTime()
         term.setTextColor(colors.green)
         write("+ "..vars[2])
         term.setTextColor(colors.yellow)
         print(" joined the game")
     elseif vars[1] == "leave" then
-		writeTime()
+        writeTime()
         term.setTextColor(colors.red)
         write("- ")
         term.setTextColor(colors.green)
@@ -104,21 +115,21 @@ while true do
         term.setTextColor(colors.yellow)
         print(" left the game")
     elseif vars[1] == "command" then
-		writeTime()
+        writeTime()
         term.setTextColor(colors.magenta)
         write(vars[2])
         term.setTextColor(colors.white)
         print(": \\"..vars[3].." "..table.concat(vars[4], " "))
     elseif vars[1] == "modem_message" then
         if vars[3] == 2 and vars[4] == 2 and vars[5].username and type(vars[5].message) == "table" then
-			writeTime()
+            writeTime()
             term.setTextColor(colors.cyan)
             write(vars[5].username)
             term.setTextColor(colors.white)
             print(": "..textutils.serialize(vars[5].message))
-		elseif vars[3] == channel and vars[4] == channel and vars[5].username and type(vars[5].message) == "string" then
-			writeTime()
-			term.setTextColor(colors.cyan)
+        elseif vars[3] == channel and vars[4] == channel and vars[5].username and type(vars[5].message) == "string" then
+            writeTime()
+            term.setTextColor(colors.cyan)
             write(vars[5].username)
             term.setTextColor(colors.white)
             print(": "..vars[5].message)
