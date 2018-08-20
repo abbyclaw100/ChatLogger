@@ -65,9 +65,13 @@ monitor.clear()
 monitor.setCursorPos(1,1)
 monitor.setTextScale(0.5)
  
-local channel = 3
+local channel
 
-if type(config.channel) == "number" and config.channel < 65536 and config.channel > 0 then channel = config.channel end
+if type(config.channel) == "number" and config.channel < 65536 and config.channel > 0 then channel = config.channel 
+else 
+    channel = 3 
+    print("Using default channel (3).")
+end
  
 if modem then modem.open(channel) end
  
