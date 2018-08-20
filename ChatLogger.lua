@@ -1,7 +1,7 @@
---16
---added channel configuration
+--17
+--added channel configuration (reference config.lua on this repo if you need to add the channel)
  
-local version = 16
+local version = 17
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -67,7 +67,7 @@ monitor.setTextScale(0.5)
  
 local channel = 3
 
-if type(config.channel) == "number" and config.channel < 65536 and config.channel > 0 then channel = modem.channel end
+if type(config.channel) == "number" and config.channel < 65536 and config.channel > 0 then channel = config.channel end
  
 if modem then modem.open(channel) end
  
