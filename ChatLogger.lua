@@ -1,7 +1,7 @@
---17
---added channel configuration (reference config.lua on this repo if you need to add the channel)
+--18
+--minor update
  
-local version = 17
+local version = 18
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -28,7 +28,7 @@ if latest ~= nil then
                     fs.delete(shell.getRunningProgram())
                     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua chatLogger.lua")
                     print("Update complete!")
-                    print("If you wish to run the new version, then hold CTRL+R and run chatLogger.lua.")
+                    print("If you wish to run the new version, then hold CTRL+T and run chatLogger.lua.")
                 else
                     print("Not updating.")
                     break
