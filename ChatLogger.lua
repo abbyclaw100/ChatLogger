@@ -6,11 +6,19 @@ local version = 18
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
 end
+
+if not fs.exists("json.lua") then shell.run("pastebin get 4nRg9CHU json.lua") end
+os.loadAPI("json.lua")
  
 local configFile = fs.open("config.lua", "r")
 local configSerialized = configFile.readAll()
 local config = textutils.unserialize(configSerialized)
 configFile.close()
+
+local id = config.webhookId
+local token = config.token
+
+if not token or not tonumber(id) then config.doWebhook = false else config.doWebhook = true end
  
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
  
@@ -81,6 +89,15 @@ local function writeTime()
     term.setTextColor(colors.purple)
     write(textutils.formatTime(os.time("utc"), true).." ")
 end
+
+local function sendToWebhook(message, user)
+     if config.doWebhook then
+         local header = { "Content-Type: application/json" }
+         local encData = ""
+         if user then local data = { content = message, username = user } encData = json.encode(data) else encData = { content = message } json.encode(data) end
+         http.post("https://discordapp.com/api/webhooks/"..id.."/"..token, encData, header)
+     end
+end
  
 while true do
     local vars = {os.pullEvent()}
@@ -90,18 +107,23 @@ while true do
         write(vars[2])
         term.setTextColor(colors.white)
         print(": "..vars[3])
+        sendToWebhook(vars[3], vars[2])
     elseif vars[1] == "death" then
         writeTime()
         term.setTextColor(colors.white)
         if vars[3] == nil then
             print(vars[2].." died")
+            sendToWebhook(vars[2].." died")
         else
             if vars[4] == "mob" then
                 print(vars[2].." was killed by a/an "..vars[3])
+                sendToWebhook(vars[2].." was killed by a/an "..vars[3])
             elseif vars[4] == "arrow" then
                 print(vars[2].." was shot by "..vars[3])
+                sendToWebhook(vars[2].." was shot by "..vars[3])
             else
                 print(vars[2].." was slain by "..vars[3])
+                sendToWebhook(vars[2].." was slain by "..vars[3])
             end
         end
     elseif vars[1] == "join" then
@@ -110,6 +132,7 @@ while true do
         write("+ "..vars[2])
         term.setTextColor(colors.yellow)
         print(" joined the game")
+        sendToWebhook(vars[2].." joined the game")
     elseif vars[1] == "leave" then
         writeTime()
         term.setTextColor(colors.red)
@@ -118,6 +141,7 @@ while true do
         write(vars[2])
         term.setTextColor(colors.yellow)
         print(" left the game")
+        sendToWebhook(vars[2].." left the game")
     elseif vars[1] == "command" then
         writeTime()
         term.setTextColor(colors.magenta)
