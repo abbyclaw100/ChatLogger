@@ -1,7 +1,7 @@
---18
---minor update
+--19
+--added discord webhook integration (update config)
  
-local version = 18
+local version = 19
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
