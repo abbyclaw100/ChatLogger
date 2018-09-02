@@ -92,18 +92,14 @@ end
 
 local function sendToWebhook(message, user)
      if config.doWebhook then
-         local header = { "Content-Type: application/json" }
-         local encData = ""
          local data = {}
          if user then 
              data["content"] = message 
              data["username"] = user 
-             encData = json.encode(data) 
          else 
              data["content"] = message 
-             encData = json.encode(data) 
          end
-         http.post("https://discordapp.com/api/webhooks/"..id.."/"..token, encData, header)
+         http.post("https://discordapp.com/api/webhooks/"..id.."/"..token, json.encode(data))
      end
 end
  
