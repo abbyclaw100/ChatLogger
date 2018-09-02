@@ -1,7 +1,7 @@
---19
+--20
 --added discord webhook integration (update config)
  
-local version = 19
+local version = 20
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -94,7 +94,7 @@ local function sendToWebhook(message, user)
      if config.doWebhook then
          local header = { "Content-Type: application/json" }
          local encData = ""
-         if user then local data = { "content" = message, "username" = user } encData = json.encode(data) else encData = { "content" = message } json.encode(data) end
+         if user then local data = { "content" = message, "username" = user } encData = json.encode(data) else local data = { "content" = message } encData = json.encode(data) end
          http.post("https://discordapp.com/api/webhooks/"..id.."/"..token, encData, header)
      end
 end
