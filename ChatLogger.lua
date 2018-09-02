@@ -18,7 +18,7 @@ configFile.close()
 local id = config.webhookId
 local token = config.token
 
-if not token or not tonumber(id) then config.doWebhook = false else config.doWebhook = true end
+if not token or type(id) ~= "number" then config.doWebhook = false else config.doWebhook = true end
  
 local latest = http.get("https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua")
  
