@@ -62,7 +62,7 @@ if type(config.monitorName) ~= "string" then
     print("Monitor not set in config.lua.")
     monitor = peripheral.find("monitor", function(name, object) return object.isColor() end)
     if not monitor then print("This works best with Advanced monitors; consider upgrading.") end
-    monitor = periphera.find("monitor")
+    monitor = peripheral.find("monitor")
 else monitor = peripheral.wrap(config.monitorName)
 end
  
