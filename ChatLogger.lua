@@ -1,7 +1,7 @@
---23
+--24
 --fixed death messages on switchcraft server
  
-local version = 23
+local version = 24
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -62,6 +62,7 @@ if type(config.monitorName) ~= "string" then
     print("Monitor not set in config.lua.")
     monitor = peripheral.find("monitor", function(name, object) return object.isColor() end)
     if not monitor then print("This works best with Advanced monitors; consider upgrading.") end
+    monitor = periphera.find("monitor")
 else monitor = peripheral.wrap(config.monitorName)
 end
  
@@ -129,7 +130,8 @@ while true do
     elseif vars[1] == "death" then
         writeTime()
         term.setTextColor(colors.white)
-        if #{vars[3].find(vars[2])} > 0 then
+        local temp = vars[3]
+        if temp and #{temp:find(vars[2])} > 0 then
             print(vars[3])
             sendToWebhook(vars[3])
         elseif vars[3] == nil then
