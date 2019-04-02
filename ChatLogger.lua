@@ -34,7 +34,7 @@ if latest ~= nil then
             if event[1] == "char" then
                 if event[2] == "y" then
                     fs.delete(shell.getRunningProgram())
-                    shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua chatLogger.lua")
+                    shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/ChatLogger.lua "..shell.getRunningProgram())
                     print("Update complete!")
                     print("If you wish to run the new version, then hold CTRL+T and run chatLogger.lua.")
                 else
