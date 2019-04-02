@@ -1,7 +1,7 @@
---20
---added discord webhook integration (update config)
+--21
+--fixed death messages on switchcraft server
  
-local version = 20
+local version = 21
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -112,10 +112,27 @@ while true do
         term.setTextColor(colors.white)
         print(": "..vars[3])
         sendToWebhook(vars[3], vars[2])
+  elseif vars[1] == "chat_discord" then
+        writeTime()
+        term.setTextColor(colors.grey)
+        write("[")
+        term.setTextColor(colors.blue)
+        write("D")
+        term.setTextColor(colors.grey)
+        write("] ")
+        term.setTextColor(colors.blue)
+        local string = vars[2]
+        write(string:sub(1, #string-4))
+        term.setTextColor(colors.white)
+        print(": "..vars[3])
+        sendToWebhook(vars[3], string:sub(1, #string-4))
     elseif vars[1] == "death" then
         writeTime()
         term.setTextColor(colors.white)
-        if vars[3] == nil then
+        if #vars[3].find(vars[2]) then
+            print(vars[3])
+            sendToWebhook(vars[3])
+        elseif vars[3] == nil then
             print(vars[2].." died")
             sendToWebhook(vars[2].." died")
         else
