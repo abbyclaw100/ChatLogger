@@ -1,7 +1,7 @@
---21
+--22
 --fixed death messages on switchcraft server
  
-local version = 21
+local version = 22
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -114,11 +114,11 @@ while true do
         sendToWebhook(vars[3], vars[2])
   elseif vars[1] == "chat_discord" then
         writeTime()
-        term.setTextColor(colors.grey)
+        term.setTextColor(colors.gray)
         write("[")
         term.setTextColor(colors.blue)
         write("D")
-        term.setTextColor(colors.grey)
+        term.setTextColor(colors.gray)
         write("] ")
         term.setTextColor(colors.blue)
         local string = vars[2]
