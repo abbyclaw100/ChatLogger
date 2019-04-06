@@ -1,7 +1,7 @@
---24
---fixed death messages on switchcraft server
+--25
+--fixed death messages on switchcraft server (for real)
  
-local version = 24
+local version = 25
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -130,11 +130,11 @@ while true do
     elseif vars[1] == "death" then
         writeTime()
         term.setTextColor(colors.white)
-        local temp = vars[3]
+        local temp = vars.renderedText.text
         if temp and #{temp:find(vars[2])} > 0 then
-            print(vars[3])
-            sendToWebhook(vars[3])
-        elseif vars[3] == nil then
+            print(temp)
+            sendToWebhook(temp)
+        elseif temp == nil then
             print(vars[2].." died")
             sendToWebhook(vars[2].." died")
         else
