@@ -1,7 +1,7 @@
---26
---fixed death messages on switchcraft server (for real)
+--27
+--fixed sc discord chat bug (since username now has a #)
  
-local version = 26
+local version = 27
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -123,10 +123,10 @@ while true do
         write("] ")
         term.setTextColor(colors.blue)
         local string = vars[2]
-        write(string:sub(1, #string-4))
+        write(string:sub(1, #string-5))
         term.setTextColor(colors.white)
         print(": "..vars[3])
-        sendToWebhook(vars[3], string:sub(1, #string-4))
+        sendToWebhook(vars[3], string:sub(1, #string-5))
     elseif vars[1] == "death" then
         writeTime()
         term.setTextColor(colors.white)
