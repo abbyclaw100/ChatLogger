@@ -1,7 +1,7 @@
---27
---fixed sc discord chat bug (since username now has a #)
+--28
+--update to sc3
  
-local version = 27
+local version = 28
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -106,7 +106,7 @@ end
  
 while true do
     local vars = {os.pullEvent()}
-    if vars[1] == "chat" then
+    if vars[1] == "chat_ingame" then
         writeTime()
         term.setTextColor(colors.green)
         write(vars[2])
