@@ -1,7 +1,7 @@
---28
+--29
 --update to sc3
  
-local version = 28
+local version = 29
  
 if not fs.exists("config.lua") then
     shell.run("wget https://raw.githubusercontent.com/jakedacatman/ChatLogger/master/config.lua config.lua")
@@ -117,7 +117,7 @@ while true do
         writeTime()
         term.setTextColor(colors.gray)
         write("[")
-        term.setTextColor(colors.blue)
+        term.setTextColor(colors.red)
         write("D")
         term.setTextColor(colors.gray)
         write("] ")
